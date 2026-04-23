@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cURL Web Runner</title>
+    <link rel="stylesheet" href="/styles.css?v=20260423-pivotbox-link">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <h1>cURL Web Runner</h1>
+        </div>
+        <div class="header-actions">
+          <div class="theme-toggle" aria-label="Theme">
+            <span>Dark</span>
+            <label class="switch">
+              <input id="themeToggle" type="checkbox">
+              <span></span>
+            </label>
+          </div>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <div class="panel input-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Command</h2>
+              <p>Supported: URL, -X, -H, -d, -u, -I, -A, -e, --cookie, -L, -k</p>
+            </div>
+            <button id="sampleBtn" class="ghost" type="button">Sample</button>
+          </div>
+
+          <textarea id="curlInput" spellcheck="false" placeholder="Enter your curl command here..."></textarea>
+
+          <div class="toolbar">
+            <button id="runBtn" class="primary" type="button">Run</button>
+            <button id="clearBtn" type="button">Clear Input</button>
+            <button id="shareBtn" type="button">Share URL</button>
+            <button id="copyCurlBtn" type="button">Copy cURL</button>
+          </div>
+
+          <div class="ua-strip">
+            <span>User-Agent</span>
+            <button data-ua="windows" type="button">Windows</button>
+            <button data-ua="macos" type="button">macOS</button>
+            <button data-ua="android" type="button">Android</button>
+            <button data-ua="iphone" type="button">iPhone</button>
+          </div>
+          <p id="uaStatus" class="muted">No preset applied</p>
+
+          <details class="builder" open>
+            <summary>Generate cURL</summary>
+            <div class="form-grid">
+              <label>
+                Method
+                <select id="methodField">
+                  <option>GET</option>
+                  <option>POST</option>
+                  <option>PUT</option>
+                  <option>PATCH</option>
+                  <option>DELETE</option>
+                  <option>HEAD</option>
+                </select>
+              </label>
+              <label>
+                URL
+                <input id="urlField" type="url" placeholder="https://example.com">
+              </label>
+              <label class="wide">
+                Headers
+                <textarea id="headersField" spellcheck="false" placeholder="Content-Type: application/json&#10;Authorization: Bearer ..."></textarea>
+              </label>
+              <label class="wide">
+                Body
+                <textarea id="bodyField" spellcheck="false" placeholder="{ &quot;a&quot;: 1 }"></textarea>
+              </label>
+            </div>
+            <button id="generateBtn" type="button">Generate cURL</button>
+          </details>
+        </div>
+
+        <aside class="panel history-panel">
+          <div class="panel-head">
+            <div>
+              <h2>History</h2>
+              <p>LocalStorage, latest 200</p>
+            </div>
+            <button id="clearHistoryBtn" class="ghost" type="button">Clear</button>
+          </div>
+          <input id="historySearch" class="history-search" type="search" placeholder="Search history...">
+          <div id="historyList" class="history-list"></div>
+        </aside>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="result-top">
+          <div class="metric">
+            <span>Status</span>
+            <strong id="statusMetric">-</strong>
+          </div>
+          <div class="metric">
+            <span>Duration</span>
+            <strong id="durationMetric">-</strong>
+          </div>
+          <div class="metric">
+            <span>Size</span>
+            <strong id="sizeMetric">-</strong>
+          </div>
+          <div class="result-actions">
+            <button id="htmlPreviewBtn" type="button" disabled>HTML Preview</button>
+            <button id="imagePreviewBtn" type="button" disabled>Image Preview</button>
+            <button id="copyResultBtn" type="button">Copy</button>
+          </div>
+        </div>
+
+        <div id="errorBox" class="error" hidden></div>
+
+        <div class="tabs" role="tablist">
+          <button class="active" data-tab="body" type="button">Body</button>
+          <button data-tab="headers" type="button">Headers</button>
+          <button data-tab="raw" type="button">Raw</button>
+          <button data-tab="cookies" type="button">Cookies</button>
+        </div>
+
+        <div id="bodyTab" class="tab-page active">
+          <pre id="bodyView" class="code-view">Run a request to see the response body.</pre>
+        </div>
+        <div id="headersTab" class="tab-page">
+          <div id="headersView" class="table-wrap"></div>
+        </div>
+        <div id="rawTab" class="tab-page">
+          <pre id="rawView" class="code-view"></pre>
+        </div>
+        <div id="cookiesTab" class="tab-page">
+          <div id="cookiesView" class="table-wrap"></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="previewDialog">
+      <div class="dialog-head">
+        <strong id="previewTitle">Preview</strong>
+        <button id="closePreviewBtn" type="button">Close</button>
+      </div>
+      <p class="warning">外部リソースの読み込みが発生する場合があります。iframeはsandbox制限付きで表示しています。</p>
+      <div id="previewHost"></div>
+    </dialog>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
