@@ -29,7 +29,7 @@
 - 監査ログ出力
 
 サンプル
-![sample](sample-ui.png)
+![sample](exmaple-ui.png)
 
 ## 対応している curl オプション
 
